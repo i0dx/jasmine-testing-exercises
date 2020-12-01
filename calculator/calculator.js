@@ -47,14 +47,18 @@ function calculateMonthlyPayment(values) {
     const interest = ((values.rate / 100) / 12);
     const payment = (values.years * 12);
     const monthlyPayment = ((principle * interest) / (1 - (1 + interest) ** -payment));
-    console.log(monthlyPayment);
-    //round to two decimal places
-    return (`${monthlyPayment.toFixed(2)}`);
+
+
+    if (monthlyPayment !== NaN && monthlyPayment > 0) {
+        return (`$${monthlyPayment.toFixed(2)}`);
+    } else {
+        return ("Please Enter Positive Integers");
+    }
 }
 
 // Given a string representing the monthly payment value,
 // update the UI to show the value.
 function updateMonthly(monthly) {
     console.log(monthly);
-    document.querySelector("span").innerText = "$" + monthly;
+    document.querySelector("span").innerText = monthly;
 }
