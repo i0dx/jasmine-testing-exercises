@@ -44,7 +44,7 @@ function updateServerTable() {
     }
 }
 
-function appendDeleteBtn(tr) {
+function appendServerDeleteBtn(tr) {
     let newBtn = document.createElement('td');
     newBtn.innerText = 'X';
     newBtn.className = 'remove'
