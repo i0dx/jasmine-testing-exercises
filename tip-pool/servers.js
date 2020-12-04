@@ -38,7 +38,20 @@ function updateServerTable() {
 
         appendTd(newTr, curServer.serverName);
         appendTd(newTr, '$' + tipAverage.toFixed(2));
+        appendDeleteBtn(newTr);
 
         serverTbody.append(newTr);
     }
+}
+
+function appendDeleteBtn(tr) {
+    let newBtn = document.createElement('td');
+    newBtn.innerText = 'X';
+    newBtn.className = 'remove'
+    tr.append(newBtn);
+    newBtn.addEventListener('click', function(event) {
+        stagedRow = event.target.parentElement;
+        stagedRow.remove();
+        delete allServers[stagedRow.id];
+    });
 }
