@@ -10,35 +10,48 @@ serverForm.addEventListener('submit', submitServerInfo);
 
 // create server object and add to allServers, update html and reset input
 function submitServerInfo(evt) {
-  if (evt) evt.preventDefault(); // when running tests there is no event
+    if (evt) evt.preventDefault(); // when running tests there is no event
 
-  let serverName = serverNameInput.value;
+    let serverName = serverNameInput.value;
 
-  if (serverName !== '') {
-    serverId++;
-    allServers['server' + serverId] = { serverName };
+    if (serverName !== '') {
+        serverId++;
+        allServers['server' + serverId] = { serverName };
 
-    updateServerTable();
+        updateServerTable();
 
-    serverNameInput.value = '';
-  }
+        serverNameInput.value = '';
+    }
 }
 
 // Create table row element and pass to appendTd function with input value
 function updateServerTable() {
-  serverTbody.innerHTML = '';
+    serverTbody.innerHTML = '';
 
-  for (let key in allServers) {
-    let curServer = allServers[key];
+    for (let key in allServers) {
+        let curServer = allServers[key];
 
-    let newTr = document.createElement('tr');
-    newTr.setAttribute('id', key);
+        let newTr = document.createElement('tr');
+        newTr.setAttribute('id', key);
 
-    let tipAverage = sumPaymentTotal('tipAmt') / Object.keys(allServers).length;
+        let tipAverage = sumPaymentTotal('tipAmt') / Object.keys(allServers).length;
 
-    appendTd(newTr, curServer.serverName);
-    appendTd(newTr, '$' + tipAverage.toFixed(2));
+        appendTd(newTr, curServer.serverName);
+        appendTd(newTr, '$' + tipAverage.toFixed(2));
+        appendDeleteBtn(newTr);
 
-    serverTbody.append(newTr);
-  }
+        serverTbody.append(newTr);
+    }
+}
+
+function appendDeleteBtn(tr) {
+    let newBtn = document.createElement('td');
+    newBtn.innerText = 'X';
+    newBtn.className = 'remove'
+    tr.append(newBtn);
+    newBtn.addEventListener('click', function(event) {
+        stagedRow = event.target.parentElement;
+        stagedRow.remove();
+        delete allServers[stagedRow.id];
+    });
 }
